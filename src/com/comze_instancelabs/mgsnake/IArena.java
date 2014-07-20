@@ -78,14 +78,8 @@ public class IArena extends Arena {
 	public void spectate(String playername) {
 		Player p = Bukkit.getPlayer(playername);
 		p.removePotionEffect(PotionEffectType.INVISIBILITY);
-		int count = 0;
-		for (String p_ : this.getAllPlayers()) {
-			if (!MinigamesAPI.getAPI().pinstances.get(m).global_lost.containsKey(p_)) {
-				count++;
-			}
-		}
 
-		if (count < 2) {
+		if (this.getPlayerAlive() < 2) {
 			// last man standing
 			this.stop();
 			return;
@@ -137,7 +131,8 @@ public class IArena extends Arena {
 
 		t = Bukkit.getScheduler().runTaskTimer(m, new Runnable() {
 			public void run() {
-				for (String p_ : a.getAllPlayers()) {
+				ArrayList<String> temparr = new ArrayList<String>(a.getAllPlayers());
+				for (String p_ : temparr) {
 					if (!MinigamesAPI.getAPI().pinstances.get(m).global_lost.containsKey(p_)) {
 						final Player p = Bukkit.getPlayer(p_);
 						Location l_ = p.getLocation();
