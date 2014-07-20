@@ -52,6 +52,8 @@ public class Main extends JavaPlugin implements Listener {
 	public boolean v1_7_5 = false;
 	public boolean v1_7_9 = false;
 	public boolean v1_7_10 = false;
+	
+	ICommandHandler cmdhandler = new ICommandHandler();
 
 	public void onEnable() {
 		m = this;
@@ -112,8 +114,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		CommandHandler ch = new CommandHandler();
-		return ch.handleArgs(this, "mgsnake", "/" + cmd.getName(), sender, args);
+		return cmdhandler.handleArgs(this, "mgsnake", "/" + cmd.getName(), sender, args);
 	}
 
 	@EventHandler
