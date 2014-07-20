@@ -1,0 +1,12 @@
+name: MGSnake
+main: com.comze_instancelabs.mgsnake.Main
+version: 1.0.0
+author: InstanceLabs
+softdepend: [Vault, MinigamesAPI]
+depend: [MinigamesAPI]
+loadbefore: [MinigamesAPI]
+commands:
+   sc:
+      description: Main command
+      usage: /sc [action]
+      aliases: [snake, mgsnake]
