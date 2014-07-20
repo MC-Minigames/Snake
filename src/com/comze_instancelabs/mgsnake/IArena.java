@@ -76,6 +76,7 @@ public class IArena extends Arena {
 
 	@Override
 	public void spectate(String playername) {
+		super.spectate(playername);
 		Player p = Bukkit.getPlayer(playername);
 		p.removePotionEffect(PotionEffectType.INVISIBILITY);
 
@@ -84,7 +85,6 @@ public class IArena extends Arena {
 			this.stop();
 			return;
 		}
-		super.spectate(playername);
 	}
 
 	@Override
