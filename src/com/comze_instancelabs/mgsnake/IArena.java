@@ -137,7 +137,11 @@ public class IArena extends Arena {
 						final Player p = Bukkit.getPlayer(p_);
 						Location l_ = p.getLocation();
 						l_.setPitch(0F);
-						Vector dir = l_.getDirection().normalize().multiply(0.4D);
+						double multiplier = 0.4D;
+						if(m.pspeed.contains(p.getName())){
+							multiplier = 1D;
+						}
+						Vector dir = l_.getDirection().normalize().multiply(multiplier);
 						Vector dir_ = new Vector(dir.getX(), 0.0001D, dir.getZ());
 						p.setVelocity(dir_);
 

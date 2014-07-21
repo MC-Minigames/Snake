@@ -12,13 +12,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.comze_instancelabs.mgsnake.nms.register1_7_10;
@@ -30,12 +36,10 @@ import com.comze_instancelabs.minigamesapi.ArenaSetup;
 import com.comze_instancelabs.minigamesapi.ArenaState;
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
-import com.comze_instancelabs.minigamesapi.commands.CommandHandler;
 import com.comze_instancelabs.minigamesapi.config.ArenasConfig;
 import com.comze_instancelabs.minigamesapi.config.DefaultConfig;
 import com.comze_instancelabs.minigamesapi.config.MessagesConfig;
 import com.comze_instancelabs.minigamesapi.config.StatsConfig;
-import com.comze_instancelabs.minigamesapi.events.ArenaStartedEvent;
 import com.comze_instancelabs.minigamesapi.util.Util;
 import com.comze_instancelabs.minigamesapi.util.Validator;
 
@@ -52,8 +56,10 @@ public class Main extends JavaPlugin implements Listener {
 	public boolean v1_7_5 = false;
 	public boolean v1_7_9 = false;
 	public boolean v1_7_10 = false;
-	
+
 	ICommandHandler cmdhandler = new ICommandHandler();
+
+	ArrayList<String> pspeed = new ArrayList<String>();
 
 	public void onEnable() {
 		m = this;
@@ -167,6 +173,52 @@ public class Main extends JavaPlugin implements Listener {
 	public void onBreak(BlockBreakEvent event) {
 		if (pli.global_players.containsKey(event.getPlayer().getName())) {
 			event.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onInventoryClick(InventoryInteractEvent event){
+		final Player p = (Player) event.getWhoClicked();
+		if (pli.global_players.containsKey(p.getName())) {
+			event.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onInteract(PlayerInteractEvent event) {
+		final Player p = event.getPlayer();
+		if (pli.global_players.containsKey(p.getName())) {
+			if (event.hasItem()) {
+				if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+					final ItemStack item = event.getItem();
+					if (item.getType() == Material.IRON_BOOTS) {
+						pspeed.add(p.getName());
+						Bukkit.getScheduler().runTaskLater(m, new Runnable() {
+							public void run() {
+								if (pspeed.contains(p.getName())) {
+									pspeed.remove(p.getName());
+								}
+							}
+						}, 200L);
+						Util.clearInv(p);
+						event.setCancelled(true);
+						return;
+					} else if (item.getType() == Material.GOLD_BOOTS) {
+						//TODO jump effect is a bit cut off by the forced movement
+						p.removePotionEffect(PotionEffectType.JUMP);
+						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 7));
+						Bukkit.getScheduler().runTaskLater(m, new Runnable() {
+							public void run() {
+								p.removePotionEffect(PotionEffectType.JUMP);
+								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, -5));
+							}
+						}, 100L);
+						Util.clearInv(p);
+						event.setCancelled(true);
+						return;
+					}
+				}
+			}
 		}
 	}
 
