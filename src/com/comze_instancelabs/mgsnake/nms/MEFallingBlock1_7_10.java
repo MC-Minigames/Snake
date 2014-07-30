@@ -1,36 +1,22 @@
 package com.comze_instancelabs.mgsnake.nms;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import net.minecraft.server.v1_7_R3.DamageSource;
-import net.minecraft.server.v1_7_R3.EntityComplexPart;
-import net.minecraft.server.v1_7_R3.EntityHuman;
-import net.minecraft.server.v1_7_R3.EntityMonster;
-import net.minecraft.server.v1_7_R3.EntitySheep;
-import net.minecraft.server.v1_7_R3.EntityTypes;
-import net.minecraft.server.v1_7_R3.PathfinderGoal;
-import net.minecraft.server.v1_7_R3.PathfinderGoalHurtByTarget;
-import net.minecraft.server.v1_7_R3.PathfinderGoalLookAtPlayer;
-import net.minecraft.server.v1_7_R3.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_7_R3.PathfinderGoalRandomLookaround;
-import net.minecraft.server.v1_7_R3.PathfinderGoalRandomStroll;
-import net.minecraft.server.v1_7_R3.World;
+import net.minecraft.server.v1_7_R4.DamageSource;
+import net.minecraft.server.v1_7_R4.EntityComplexPart;
+import net.minecraft.server.v1_7_R4.EntityFallingBlock;
+import net.minecraft.server.v1_7_R4.World;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import com.comze_instancelabs.mgsnake.Main;
 
-public class MESheep1_7_9 extends EntitySheep {
+public class MEFallingBlock1_7_10 extends EntityFallingBlock {
 
 	private boolean onGround = false;
 	private Main m;
 	private String arena;
 	
-	public MESheep1_7_9(Main m, String arena, Location loc, World world) {
+	public MEFallingBlock1_7_10(Main m, String arena, Location loc, World world) {
 		super(world);
 		this.m = m;
 		this.arena = arena;
@@ -83,18 +69,18 @@ public class MESheep1_7_9 extends EntitySheep {
         return (float) (-yaw * 180 / Math.PI - 90);
     }
 	
-	/*@Override
-	public void e() {
-		return;
-	}*/
-
-	public boolean damageEntity(DamageSource damagesource, int i) {
-		return false;
+	@Override
+	public void h() {
+		motY = 0;
+		move(motX, motY, motZ);
 	}
 
 	@Override
-	public int getExpReward() {
-		return 0;
+	public void g(double x, double y, double z) {
+
+	}
+	public boolean damageEntity(DamageSource damagesource, int i) {
+		return false;
 	}
 
 	public boolean a(EntityComplexPart entitycomplexpart, DamageSource damagesource, int i) {
