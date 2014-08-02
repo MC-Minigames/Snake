@@ -45,7 +45,7 @@ import com.comze_instancelabs.minigamesapi.util.Validator;
 
 public class Main extends JavaPlugin implements Listener {
 
-	// TODO multiple spawns, max 16 players
+	// TODO max 16 players
 
 	MinigamesAPI api = null;
 	PluginInstance pli = null;
@@ -60,6 +60,7 @@ public class Main extends JavaPlugin implements Listener {
 	ICommandHandler cmdhandler = new ICommandHandler();
 
 	ArrayList<String> pspeed = new ArrayList<String>();
+	ArrayList<String> pjump = new ArrayList<String>();
 
 	public void onEnable() {
 		m = this;
@@ -175,9 +176,9 @@ public class Main extends JavaPlugin implements Listener {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler
-	public void onInventoryClick(InventoryInteractEvent event){
+	public void onInventoryClick(InventoryInteractEvent event) {
 		final Player p = (Player) event.getWhoClicked();
 		if (pli.global_players.containsKey(p.getName())) {
 			event.setCancelled(true);
@@ -204,15 +205,12 @@ public class Main extends JavaPlugin implements Listener {
 						event.setCancelled(true);
 						return;
 					} else if (item.getType() == Material.GOLD_BOOTS) {
-						//TODO jump effect is a bit cut off by the forced movement
-						p.removePotionEffect(PotionEffectType.JUMP);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 7));
-						Bukkit.getScheduler().runTaskLater(m, new Runnable() {
-							public void run() {
-								p.removePotionEffect(PotionEffectType.JUMP);
-								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, -5));
-							}
-						}, 100L);
+						/*
+						 * p.removePotionEffect(PotionEffectType.JUMP); p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 7));
+						 * Bukkit.getScheduler().runTaskLater(m, new Runnable() { public void run() { p.removePotionEffect(PotionEffectType.JUMP);
+						 * p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, -5)); } }, 100L);
+						 */
+						pjump.add(p.getName());
 						Util.clearInv(p);
 						event.setCancelled(true);
 						return;

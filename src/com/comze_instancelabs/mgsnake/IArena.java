@@ -52,7 +52,7 @@ public class IArena extends Arena {
 	public void leavePlayer(final String playername, final boolean fullLeave) {
 		Player p = Bukkit.getPlayer(playername);
 		for (Entity t : p.getNearbyEntities(64, 64, 64)) {
-			if (t.getType() == EntityType.FALLING_BLOCK) { //TODO when one player leaves, all get removed?
+			if (t.getType() == EntityType.FALLING_BLOCK) { // TODO when one player leaves, all get removed?
 				t.remove();
 			}
 		}
@@ -133,11 +133,16 @@ public class IArena extends Arena {
 						Location l_ = p.getLocation();
 						l_.setPitch(0F);
 						double multiplier = 0.4D;
-						if(m.pspeed.contains(p.getName())){
+						double jump_multiplier = 0.0001D;
+						if (m.pspeed.contains(p.getName())) {
 							multiplier = 1D;
 						}
+						if (m.pjump.contains(p.getName())) {
+							jump_multiplier = 1.4D;
+							m.pjump.remove(p.getName());
+						}
 						Vector dir = l_.getDirection().normalize().multiply(multiplier);
-						Vector dir_ = new Vector(dir.getX(), 0.0001D, dir.getZ());
+						Vector dir_ = new Vector(dir.getX(), jump_multiplier, dir.getZ());
 						p.setVelocity(dir_);
 
 						Vector v = p.getLocation().getDirection().normalize();
