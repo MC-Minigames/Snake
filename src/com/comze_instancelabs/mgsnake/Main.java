@@ -78,7 +78,7 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().info("Turned on 1.6.4 mode. [unsupported]");
 		} else if (version.contains("v1_7_R1")) { // 1.7.2
 			v1_7_2 = true;
-			register1_7_5.registerEntities();
+			register1_7_2.registerEntities();
 			getLogger().info("Turned on 1.7.2 mode.");
 		} else if (version.contains("v1_7_R2")) { // 1.7.5
 			v1_7_5 = true;
