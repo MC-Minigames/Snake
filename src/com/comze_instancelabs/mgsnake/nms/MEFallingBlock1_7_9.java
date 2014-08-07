@@ -89,4 +89,8 @@ public class MEFallingBlock1_7_9 extends EntityFallingBlock {
 		return false;
 	}
 
+	public org.bukkit.craftbukkit.v1_7_R3.entity.CraftEntity getBukkitEntity() {
+		return super.getBukkitEntity();
+	}
+
 }

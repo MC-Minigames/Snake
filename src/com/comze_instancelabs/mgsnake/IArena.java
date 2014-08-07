@@ -88,6 +88,11 @@ public class IArena extends Arena {
 			task.cancel();
 		}
 		super.stop();
+		pvecs.clear();
+		this.psheep1_7_10.clear();
+		this.psheep1_7_9.clear();
+		this.psheep1_7_5.clear();
+		this.psheep1_7_2.clear();
 	}
 
 	Random r = new Random();
@@ -250,42 +255,57 @@ public class IArena extends Arena {
 
 					if (m.v1_7_2) {
 						for (MEFallingBlock1_7_2 ms : psheep1_7_2.get(p_)) {
-							if (c < pvecs.get(p_).size()) {
-								Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_2.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
-								psheep1_7_2.get(p_).get(c).setYaw(plocs.get(p_).get(c));
-								psheep1_7_2.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
-								c++;
+							if (pvecs.containsKey(p_)) {
+								if (c < pvecs.get(p_).size()) {
+									Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_2.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
+									psheep1_7_2.get(p_).get(c).setYaw(plocs.get(p_).get(c));
+									psheep1_7_2.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
+									c++;
+								}
+							} else {
+								pvecs.put(p_, new ArrayList<Vector>(Arrays.asList(p_.getLocation().getDirection().normalize().add(new Vector(0.1D, 0.1D, 0.1D)))));
 							}
 						}
 					} else if (m.v1_7_5) {
 						for (MEFallingBlock1_7_5 ms : psheep1_7_5.get(p_)) {
-							if (c < pvecs.get(p_).size()) {
-								Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_5.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
-								psheep1_7_5.get(p_).get(c).setYaw(plocs.get(p_).get(c));
-								psheep1_7_5.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
-								c++;
+							if (pvecs.containsKey(p_)) {
+								if (c < pvecs.get(p_).size()) {
+									Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_5.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
+									psheep1_7_5.get(p_).get(c).setYaw(plocs.get(p_).get(c));
+									psheep1_7_5.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
+									c++;
+								}
+							} else {
+								pvecs.put(p_, new ArrayList<Vector>(Arrays.asList(p_.getLocation().getDirection().normalize().add(new Vector(0.1D, 0.1D, 0.1D)))));
 							}
 						}
 					} else if (m.v1_7_9) {
 						for (MEFallingBlock1_7_9 ms : psheep1_7_9.get(p_)) {
-							if (c < pvecs.get(p_).size()) {
-								Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_9.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
-								psheep1_7_9.get(p_).get(c).setYaw(plocs.get(p_).get(c));
-								psheep1_7_9.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
-								c++;
+							if (pvecs.containsKey(p_)) {
+								if (c < pvecs.get(p_).size()) {
+									Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_9.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
+									psheep1_7_9.get(p_).get(c).setYaw(plocs.get(p_).get(c));
+									psheep1_7_9.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
+									c++;
+								}
+							} else {
+								pvecs.put(p_, new ArrayList<Vector>(Arrays.asList(p_.getLocation().getDirection().normalize().add(new Vector(0.1D, 0.1D, 0.1D)))));
 							}
 						}
 					} else if (m.v1_7_10) {
 						for (MEFallingBlock1_7_10 ms : psheep1_7_10.get(p_)) {
-							if (c < pvecs.get(p_).size()) {
-								Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_10.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
-								psheep1_7_10.get(p_).get(c).setYaw(plocs.get(p_).get(c));
-								psheep1_7_10.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
-								c++;
+							if (pvecs.containsKey(p_)) {
+								if (c < pvecs.get(p_).size()) {
+									Vector direction = plocs.get(p_).get(c).toVector().subtract(psheep1_7_10.get(p_).get(c).getBukkitEntity().getLocation().toVector()).normalize();
+									psheep1_7_10.get(p_).get(c).setYaw(plocs.get(p_).get(c));
+									psheep1_7_10.get(p_).get(c).getBukkitEntity().setVelocity(direction.multiply(0.5D));
+									c++;
+								}
+							} else {
+								pvecs.put(p_, new ArrayList<Vector>(Arrays.asList(p_.getLocation().getDirection().normalize().add(new Vector(0.1D, 0.1D, 0.1D)))));
 							}
 						}
 					}
-
 				}
 
 			}

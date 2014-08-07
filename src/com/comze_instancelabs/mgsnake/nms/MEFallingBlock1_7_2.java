@@ -87,5 +87,9 @@ public class MEFallingBlock1_7_2 extends EntityFallingBlock {
 	public boolean a(EntityComplexPart entitycomplexpart, DamageSource damagesource, int i) {
 		return false;
 	}
+	
+	public org.bukkit.craftbukkit.v1_7_R1.entity.CraftEntity getBukkitEntity(){
+		return super.getBukkitEntity();
+	}
 
 }
