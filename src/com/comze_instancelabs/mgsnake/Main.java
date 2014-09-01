@@ -97,6 +97,10 @@ public class Main extends JavaPlugin implements Listener {
 			register1_7_2.registerEntities();
 			getLogger().info("Turned on 1.7.2 mode.");
 		}
+
+		this.getConfig().addDefault("config.powerup_spawn_percentage", 5);
+		this.getConfig().options().copyDefaults(true);
+		this.saveConfig();
 	}
 
 	public static ArrayList<Arena> loadArenas(JavaPlugin plugin, ArenasConfig cf) {
@@ -127,7 +131,9 @@ public class Main extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onPlayerPickup(PlayerPickupItemEvent event) {
 		if (pli.global_players.containsKey(event.getPlayer().getName())) {
-			event.setCancelled(true);
+			if (event.getItem().getItemStack().getType() != Material.IRON_BOOTS && event.getItem().getItemStack().getType() != Material.GOLD_BOOTS) {
+				event.setCancelled(true);
+			}
 		}
 	}
 

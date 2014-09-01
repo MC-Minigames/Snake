@@ -9,11 +9,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Colorable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -31,6 +34,7 @@ import com.comze_instancelabs.mgsnake.nms.register1_7_9;
 import com.comze_instancelabs.minigamesapi.Arena;
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.comze_instancelabs.minigamesapi.PluginInstance;
+import com.comze_instancelabs.minigamesapi.util.PowerupUtil;
 import com.comze_instancelabs.minigamesapi.util.Validator;
 
 public class IArena extends Arena {
@@ -38,6 +42,7 @@ public class IArena extends Arena {
 	Main m = null;
 	BukkitTask task = null;
 	public static HashMap<String, Integer> pteam = new HashMap<String, Integer>();
+	BukkitTask powerup_task;
 
 	public IArena(Main m, String arena) {
 		super(m, arena);
@@ -102,6 +107,39 @@ public class IArena extends Arena {
 		this.psheep1_7_9.clear();
 		this.psheep1_7_5.clear();
 		this.psheep1_7_2.clear();
+	}
+
+	@Override
+	public void start(boolean tp) {
+		super.start(tp);
+		final IArena a = this;
+		powerup_task = Bukkit.getScheduler().runTaskTimer(m, new Runnable() {
+			public void run() {
+				if (Math.random() * 100 <= m.getConfig().getInt("config.powerup_spawn_percentage")) {
+					try {
+						Player p = Bukkit.getPlayer(a.getAllPlayers().get((int) Math.random() * (a.getAllPlayers().size() - 1)));
+						if (p != null) {
+							PowerupUtil.spawnPowerup(p.getLocation().clone().add(0D, 5D, 0D), getItemStack());
+						}
+					} catch (Exception e) {
+						System.out.println("Use the latest MinigamesLib version to get powerups.");
+					}
+				}
+			}
+		}, 60, 60);
+	}
+
+	public ItemStack getItemStack() {
+		double i = Math.random() * 100;
+		ItemStack ret = new ItemStack(Material.IRON_BOOTS);
+		if (i <= 60) {
+			// get a speed boost
+			ret = new ItemStack(Material.IRON_BOOTS);
+		} else {
+			// get a jump boost
+			ret = new ItemStack(Material.GOLD_BOOTS);
+		}
+		return ret;
 	}
 
 	Random r = new Random();
