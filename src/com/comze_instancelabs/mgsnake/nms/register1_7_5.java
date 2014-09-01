@@ -32,17 +32,17 @@ public class register1_7_5 {
 			Field e = entityTypeClass.getDeclaredField("e");
 			e.setAccessible(true);
 			HashMap e_map = (HashMap) e.get(null);
-			e_map.put(Integer.valueOf(21), MEFallingBlock1_7_5.class);
+			e_map.put(Integer.valueOf(91), MEFallingBlock1_7_5.class);
 
 			Field f = entityTypeClass.getDeclaredField("f");
 			f.setAccessible(true);
 			HashMap f_map = (HashMap) f.get(null);
-			f_map.put(MEFallingBlock1_7_5.class, Integer.valueOf(21));
+			f_map.put(MEFallingBlock1_7_5.class, Integer.valueOf(91));
 
 			Field g = entityTypeClass.getDeclaredField("g");
 			g.setAccessible(true);
 			HashMap g_map = (HashMap) g.get(null);
-			g_map.put("MESheep", Integer.valueOf(21));
+			g_map.put("MESheep", Integer.valueOf(91));
 
 			return true;
 		} catch (Exception ex) {
@@ -58,9 +58,10 @@ public class register1_7_5 {
 
 		Bukkit.getScheduler().runTask(m, new Runnable(){
 			public void run(){
-				t_.id = Block.e(35);
-				t_.data = color;
+				//t_.id = Block.e(35);
+				//t_.data = color;
 				((net.minecraft.server.v1_7_R2.World) w).addEntity(t_, CreatureSpawnEvent.SpawnReason.CUSTOM);
+				t_.setColor(color);
 			}
 		});
 		

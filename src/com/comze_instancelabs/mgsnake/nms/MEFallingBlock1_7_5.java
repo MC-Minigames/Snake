@@ -2,7 +2,7 @@ package com.comze_instancelabs.mgsnake.nms;
 
 import net.minecraft.server.v1_7_R2.DamageSource;
 import net.minecraft.server.v1_7_R2.EntityComplexPart;
-import net.minecraft.server.v1_7_R2.EntityFallingBlock;
+import net.minecraft.server.v1_7_R2.EntitySheep;
 import net.minecraft.server.v1_7_R2.World;
 
 import org.bukkit.Location;
@@ -10,7 +10,7 @@ import org.bukkit.util.Vector;
 
 import com.comze_instancelabs.mgsnake.Main;
 
-public class MEFallingBlock1_7_5 extends EntityFallingBlock {
+public class MEFallingBlock1_7_5 extends EntitySheep {
 
 	private boolean onGround = false;
 	private Main m;
@@ -75,10 +75,10 @@ public class MEFallingBlock1_7_5 extends EntityFallingBlock {
 		move(motX, motY, motZ);
 	}
 
-	@Override
+	/*@Override
 	public void g(double x, double y, double z) {
 
-	}
+	}*/
 
 	public boolean damageEntity(DamageSource damagesource, int i) {
 		return false;

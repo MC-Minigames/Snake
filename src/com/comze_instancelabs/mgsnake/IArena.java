@@ -14,6 +14,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
+import org.bukkit.material.Colorable;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -51,9 +52,16 @@ public class IArena extends Arena {
 	@Override
 	public void leavePlayer(final String playername, final boolean fullLeave) {
 		Player p = Bukkit.getPlayer(playername);
-		for (Entity t : p.getNearbyEntities(64, 64, 64)) {
-			if (t.getType() == EntityType.FALLING_BLOCK) { // TODO when one player leaves, all get removed?
-				t.remove();
+		for (Entity t : p.getNearbyEntities(70, 70, 70)) {
+			if (t.getType() == EntityType.SHEEP) {
+				Sheep sheep = (Sheep) t;
+				DyeColor color = ((Colorable) sheep).getColor();
+				if (pteam.containsKey(p.getName())) {
+					if (pteam.get(p.getName()) == (int) color.getData()) {
+						t.remove();
+					}
+				}
+
 			}
 		}
 		p.removePotionEffect(PotionEffectType.JUMP);
@@ -70,6 +78,7 @@ public class IArena extends Arena {
 		for (int i = 0; i < 16; i++) {
 			if (!pteam.values().contains(i)) {
 				pteam.put(playername, i);
+				break;
 			}
 		}
 		super.joinPlayerLobby(playername);
@@ -169,9 +178,10 @@ public class IArena extends Arena {
 						}
 
 						for (Entity ent : p.getNearbyEntities(1, 1, 1)) {
-							if (ent.getType() == EntityType.FALLING_BLOCK) {
-								FallingBlock s = (FallingBlock) ent;
-								if (s.getBlockData() != (byte) pteam.get(p.getName()).byteValue()) {
+							if (ent.getType() == EntityType.SHEEP) {
+								Sheep s = (Sheep) ent;
+								DyeColor color = ((Colorable) s).getColor();
+								if (color.getData() != (byte) pteam.get(p.getName()).byteValue()) {
 									a.spectate(p.getName());
 								}
 							} else if (ent.getType() == EntityType.SLIME) {
