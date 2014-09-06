@@ -99,6 +99,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 
 		this.getConfig().addDefault("config.powerup_spawn_percentage", 5);
+		this.getConfig().addDefault("config.players_invisible", true);
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
 	}

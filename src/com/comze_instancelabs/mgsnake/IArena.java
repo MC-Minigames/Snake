@@ -91,9 +91,11 @@ public class IArena extends Arena {
 
 	@Override
 	public void spectate(String playername) {
-		super.spectate(playername);
 		Player p = Bukkit.getPlayer(playername);
-		p.removePotionEffect(PotionEffectType.INVISIBILITY);
+		if (p != null) {
+			p.removePotionEffect(PotionEffectType.INVISIBILITY);
+		}
+		super.spectate(playername);
 	}
 
 	@Override
@@ -145,12 +147,15 @@ public class IArena extends Arena {
 	Random r = new Random();
 
 	private void initPlayerMovements(final String arena) {
+		boolean invisible = m.getConfig().getBoolean("config.players_invisible");
 		for (String p_ : this.getAllPlayers()) {
 			final Player p = Bukkit.getPlayer(p_);
 
 			p.setWalkSpeed(0.0F);
 			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 9999999, -5));
-			p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 9999999, 2));
+			if (invisible) {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 9999999, 2));
+			}
 			Vector v = p.getLocation().getDirection().normalize();
 			Location l = p.getLocation().subtract((new Vector(v.getX(), 0.0001D, v.getZ())));
 			Location l_ = p.getLocation().subtract((new Vector(v.getX(), 0.0001D, v.getZ()).multiply(2D)));
