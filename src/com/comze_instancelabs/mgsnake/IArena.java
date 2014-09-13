@@ -29,6 +29,7 @@ import com.comze_instancelabs.mgsnake.nms.register1_7_2;
 import com.comze_instancelabs.mgsnake.nms.register1_7_5;
 import com.comze_instancelabs.mgsnake.nms.register1_7_9;
 import com.comze_instancelabs.minigamesapi.Arena;
+import com.comze_instancelabs.minigamesapi.ArenaState;
 import com.comze_instancelabs.minigamesapi.MinigamesAPI;
 import com.comze_instancelabs.minigamesapi.util.Util;
 
@@ -44,9 +45,41 @@ public class IArena extends Arena {
 		this.m = m;
 	}
 
+	int failcount = 0;
+
 	@Override
 	public void started() {
 		initPlayerMovements(this.getName());
+		final IArena a = this;
+		powerup_task = Bukkit.getScheduler().runTaskTimer(m, new Runnable() {
+			public void run() {
+				if (Math.random() * 100 <= m.getConfig().getInt("config.powerup_spawn_percentage")) {
+					try {
+						Player p = Bukkit.getPlayer(a.getAllPlayers().get((int) Math.random() * (a.getAllPlayers().size() - 1)));
+						if (p != null) {
+							Util.spawnPowerup(m, a, p.getLocation().clone().add(0D, 5D, 0D), getItemStack());
+						}
+					} catch (Exception e) {
+						if (a != null) {
+							if (a.getArenaState() != ArenaState.INGAME) {
+								if (powerup_task != null) {
+									System.out.println("Cancelled powerup task.");
+									powerup_task.cancel();
+								}
+							}
+						}
+						Bukkit.getLogger().info("Use the latest MinigamesLib version to get powerups.");
+						failcount++;
+						if (failcount > 2) {
+							if (powerup_task != null) {
+								System.out.println("Cancelled powerup task.");
+								powerup_task.cancel();
+							}
+						}
+					}
+				}
+			}
+		}, 60, 60);
 	}
 
 	@Override
@@ -104,26 +137,6 @@ public class IArena extends Arena {
 		this.psheep1_7_9.clear();
 		this.psheep1_7_5.clear();
 		this.psheep1_7_2.clear();
-	}
-
-	@Override
-	public void start(boolean tp) {
-		super.start(tp);
-		final IArena a = this;
-		powerup_task = Bukkit.getScheduler().runTaskTimer(m, new Runnable() {
-			public void run() {
-				if (Math.random() * 100 <= m.getConfig().getInt("config.powerup_spawn_percentage")) {
-					try {
-						Player p = Bukkit.getPlayer(a.getAllPlayers().get((int) Math.random() * (a.getAllPlayers().size() - 1)));
-						if (p != null) {
-							Util.spawnPowerup(m, a, p.getLocation().clone().add(0D, 5D, 0D), getItemStack());
-						}
-					} catch (Exception e) {
-						System.out.println("Use the latest MinigamesLib version to get powerups.");
-					}
-				}
-			}
-		}, 60, 60);
 	}
 
 	public ItemStack getItemStack() {
