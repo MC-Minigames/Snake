@@ -57,7 +57,21 @@ public class IArena extends Arena {
 					try {
 						Player p = Bukkit.getPlayer(a.getAllPlayers().get((int) Math.random() * (a.getAllPlayers().size() - 1)));
 						if (p != null) {
-							Util.spawnPowerup(m, a, p.getLocation().clone().add(0D, 5D, 0D), getItemStack());
+							boolean spawn = true;
+							if (MinigamesAPI.getAPI().pinstances.get(m).global_lost.containsKey(p.getName())) {
+								// player is a spectator, retry
+								p = Bukkit.getPlayer(a.getAllPlayers().get((int) Math.random() * (a.getAllPlayers().size() - 1)));
+								if (p != null) {
+									if (MinigamesAPI.getAPI().pinstances.get(m).global_lost.containsKey(p.getName())) {
+										spawn = false;
+									}
+								} else {
+									spawn = false;
+								}
+							}
+							if (spawn) {
+								Util.spawnPowerup(m, a, p.getLocation().clone().add(0D, 5D, 0D), getItemStack());
+							}
 						}
 					} catch (Exception e) {
 						if (a != null) {
