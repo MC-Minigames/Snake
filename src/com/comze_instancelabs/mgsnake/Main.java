@@ -23,8 +23,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.comze_instancelabs.mgsnake.nms.register1_7_10;
@@ -58,6 +56,7 @@ public class Main extends JavaPlugin implements Listener {
 	public boolean v1_7_10 = false;
 
 	ICommandHandler cmdhandler = new ICommandHandler();
+	IArenaScoreboard scoreboard;
 
 	ArrayList<String> pspeed = new ArrayList<String>();
 	ArrayList<String> pjump = new ArrayList<String>();
@@ -68,6 +67,8 @@ public class Main extends JavaPlugin implements Listener {
 		PluginInstance pinstance = api.pinstances.get(this);
 		pinstance.addLoadedArenas(loadArenas(this, pinstance.getArenasConfig()));
 		Bukkit.getPluginManager().registerEvents(this, this);
+		scoreboard = new IArenaScoreboard(this);
+		pinstance.scoreboardManager = scoreboard;
 		pli = pinstance;
 
 		// let's check which version we're on.

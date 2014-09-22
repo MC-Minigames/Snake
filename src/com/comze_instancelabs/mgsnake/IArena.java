@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Slime;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Colorable;
 import org.bukkit.potion.PotionEffect;
@@ -37,7 +38,8 @@ public class IArena extends Arena {
 
 	Main m = null;
 	BukkitTask task = null;
-	public static HashMap<String, Integer> pteam = new HashMap<String, Integer>();
+	HashMap<String, Integer> pteam = new HashMap<String, Integer>();
+	HashMap<String, Integer> pslimes = new HashMap<String, Integer>();
 	BukkitTask powerup_task;
 
 	public IArena(Main m, String arena) {
@@ -239,7 +241,8 @@ public class IArena extends Arena {
 							} else {
 								temp += 3;
 							}
-							p.getWorld().spawnEntity(p.getLocation().add(temp, 0, temp), EntityType.SLIME);
+							Slime s = (Slime) p.getWorld().spawnEntity(p.getLocation().add(temp, 0, temp), EntityType.SLIME);
+							s.setSize(1);
 						}
 
 						for (Entity ent : p.getNearbyEntities(1, 1, 1)) {
@@ -251,6 +254,7 @@ public class IArena extends Arena {
 								}
 							} else if (ent.getType() == EntityType.SLIME) {
 								arenasize.put(arena, arenasize.get(arena) + 1);
+								m.scoreboard.updateScoreboard(a);
 								ent.remove();
 								for (String p__ : a.getAllPlayers()) {
 									final Player pp = Bukkit.getPlayer(p__);
