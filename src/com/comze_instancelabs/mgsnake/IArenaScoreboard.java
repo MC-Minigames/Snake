@@ -42,7 +42,7 @@ public class IArenaScoreboard extends ArenaScoreboard {
 
 				aobjective.get(arena.getName()).setDisplaySlot(DisplaySlot.SIDEBAR);
 
-				aobjective.get(arena.getName()).setDisplayName("[" + arena.getName() + "]");
+				aobjective.get(arena.getName()).setDisplayName(pli.getMessagesConfig().scoreboard_title.replaceAll("<arena>", arena.getName()));
 
 				for (String pl_ : arena.getAllPlayers()) {
 					Player p = Bukkit.getPlayer(pl_);
