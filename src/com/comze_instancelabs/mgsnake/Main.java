@@ -43,8 +43,6 @@ import com.comze_instancelabs.minigamesapi.util.Validator;
 
 public class Main extends JavaPlugin implements Listener {
 
-	// TODO max 16 players
-
 	MinigamesAPI api = null;
 	PluginInstance pli = null;
 	static Main m = null;
@@ -75,7 +73,6 @@ public class Main extends JavaPlugin implements Listener {
 		String version = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1);
 		Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "MGSnake is running on " + version + ".");
 		if (Bukkit.getVersion().contains("v1_6")) {
-			// TODO 1.6.4
 			getLogger().info("Turned on 1.6.4 mode. [unsupported]");
 		} else if (version.contains("v1_7_R1")) { // 1.7.2
 			v1_7_2 = true;

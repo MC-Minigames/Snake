@@ -123,14 +123,15 @@ public class IArena extends Arena {
 		if (pteam.containsKey(playername)) {
 			pteam.remove(playername);
 		}
-
 		for (int i = 0; i < 16; i++) {
 			if (!pteam.values().contains(i)) {
 				pteam.put(playername, i);
 				break;
 			}
 		}
-		super.joinPlayerLobby(playername);
+		if (pteam.containsKey(playername)) {
+			super.joinPlayerLobby(playername);
+		}
 	}
 
 	@Override
@@ -386,7 +387,6 @@ public class IArena extends Arena {
 						}
 					}
 				}
-
 			}
 		}
 	}
