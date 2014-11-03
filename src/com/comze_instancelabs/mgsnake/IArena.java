@@ -230,7 +230,7 @@ public class IArena extends Arena {
 						Vector v = p.getLocation().getDirection().normalize();
 						Location l = p.getLocation().subtract((new Vector(v.getX(), 0.0001D, v.getZ()).multiply(-1D)));
 
-						if (l.getBlock().getType() != Material.AIR) {
+						if (l.clone().add(0D, 1D, 0D).getBlock().getType() != Material.AIR) {
 							a.spectate(p.getName());
 						}
 
